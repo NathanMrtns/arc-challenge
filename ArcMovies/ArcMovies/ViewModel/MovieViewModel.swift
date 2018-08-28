@@ -39,4 +39,8 @@ struct MovieViewModel {
         self.overview = movie.overview
         self.release_date = movie.release_date
     }
+
+    var posterFullPath: String {
+        return "https://image.tmdb.org/t/p/w500" + poster_path
+    }
 }
