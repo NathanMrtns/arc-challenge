@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D842BCDA2135A76800B7280A /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D842BCD92135A76800B7280A /* MovieService.swift */; };
-		D842BCDC2135B04100B7280A /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D842BCDB2135B04100B7280A /* MoviesTableViewController.swift */; };
 		D866FE1221358F9E00A0A378 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D866FE1121358F9E00A0A378 /* AppDelegate.swift */; };
 		D866FE1721358F9E00A0A378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D866FE1521358F9E00A0A378 /* Main.storyboard */; };
 		D866FE1921358FA000A0A378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D866FE1821358FA000A0A378 /* Assets.xcassets */; };
 		D866FE1C21358FA000A0A378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D866FE1A21358FA000A0A378 /* LaunchScreen.storyboard */; };
 		D866FE2721358FA000A0A378 /* ArcMoviesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D866FE2621358FA000A0A378 /* ArcMoviesTests.swift */; };
 		D866FE3221358FA000A0A378 /* ArcMoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D866FE3121358FA000A0A378 /* ArcMoviesUITests.swift */; };
+		D87A76DE2135D26300E8D128 /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76DD2135D26300E8D128 /* MoviesTableViewController.swift */; };
+		D87A76E42135D27C00E8D128 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76E32135D27C00E8D128 /* MovieService.swift */; };
+		D87A76E92135DAD200E8D128 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76E82135DAD200E8D128 /* MovieCell.swift */; };
+		D87A76EB2135DEB600E8D128 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76EA2135DEB600E8D128 /* MovieViewModel.swift */; };
+		D87A76ED2135E34000E8D128 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76EC2135E34000E8D128 /* MovieDetailsViewController.swift */; };
+		D87A76F02135E80800E8D128 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76EE2135E7A100E8D128 /* Movie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +39,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D842BCD92135A76800B7280A /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
-		D842BCDB2135B04100B7280A /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
 		D866FE0E21358F9E00A0A378 /* ArcMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArcMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D866FE1121358F9E00A0A378 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D866FE1621358F9E00A0A378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -49,6 +51,12 @@
 		D866FE2D21358FA000A0A378 /* ArcMoviesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArcMoviesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D866FE3121358FA000A0A378 /* ArcMoviesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcMoviesUITests.swift; sourceTree = "<group>"; };
 		D866FE3321358FA000A0A378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D87A76DD2135D26300E8D128 /* MoviesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
+		D87A76E32135D27C00E8D128 /* MovieService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
+		D87A76E82135DAD200E8D128 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		D87A76EA2135DEB600E8D128 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		D87A76EC2135E34000E8D128 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
+		D87A76EE2135E7A100E8D128 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +107,16 @@
 		D866FE1021358F9E00A0A378 /* ArcMovies */ = {
 			isa = PBXGroup;
 			children = (
+				D87A76E62135D28C00E8D128 /* ViewModel */,
+				D87A76E52135D28500E8D128 /* View */,
+				D87A76E22135D27C00E8D128 /* Service */,
+				D87A76DF2135D27500E8D128 /* Model */,
+				D87A76DC2135D26300E8D128 /* Controller */,
 				D866FE1121358F9E00A0A378 /* AppDelegate.swift */,
 				D866FE1521358F9E00A0A378 /* Main.storyboard */,
 				D866FE1821358FA000A0A378 /* Assets.xcassets */,
 				D866FE1A21358FA000A0A378 /* LaunchScreen.storyboard */,
 				D866FE1D21358FA000A0A378 /* Info.plist */,
-				D842BCD92135A76800B7280A /* MovieService.swift */,
-				D842BCDB2135B04100B7280A /* MoviesTableViewController.swift */,
 			);
 			path = ArcMovies;
 			sourceTree = "<group>";
@@ -126,6 +137,47 @@
 				D866FE3321358FA000A0A378 /* Info.plist */,
 			);
 			path = ArcMoviesUITests;
+			sourceTree = "<group>";
+		};
+		D87A76DC2135D26300E8D128 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D87A76DD2135D26300E8D128 /* MoviesTableViewController.swift */,
+				D87A76EC2135E34000E8D128 /* MovieDetailsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D87A76DF2135D27500E8D128 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D87A76EE2135E7A100E8D128 /* Movie.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D87A76E22135D27C00E8D128 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D87A76E32135D27C00E8D128 /* MovieService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D87A76E52135D28500E8D128 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D87A76E82135DAD200E8D128 /* MovieCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D87A76E62135D28C00E8D128 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D87A76EA2135DEB600E8D128 /* MovieViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +311,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D842BCDC2135B04100B7280A /* MoviesTableViewController.swift in Sources */,
-				D842BCDA2135A76800B7280A /* MovieService.swift in Sources */,
+				D87A76F02135E80800E8D128 /* Movie.swift in Sources */,
+				D87A76DE2135D26300E8D128 /* MoviesTableViewController.swift in Sources */,
 				D866FE1221358F9E00A0A378 /* AppDelegate.swift in Sources */,
+				D87A76ED2135E34000E8D128 /* MovieDetailsViewController.swift in Sources */,
+				D87A76E92135DAD200E8D128 /* MovieCell.swift in Sources */,
+				D87A76E42135D27C00E8D128 /* MovieService.swift in Sources */,
+				D87A76EB2135DEB600E8D128 /* MovieViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
