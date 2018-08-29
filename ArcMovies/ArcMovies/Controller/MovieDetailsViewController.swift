@@ -64,5 +64,9 @@ class MovieDetailsViewController: UIViewController {
             self.genre.attributedText = attributedString
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+    }
 
 }
