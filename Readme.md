@@ -21,3 +21,4 @@ The app is compatible with XCode 9 and Swift 4.1
  - The movies list is based on US Region only
  - Movie details screen has only the information that was asked for
  - Later on I intend to add .gitignore in order to remove Pod files.
+ - Models identifiers are not using camel case because of JSONDecoder
