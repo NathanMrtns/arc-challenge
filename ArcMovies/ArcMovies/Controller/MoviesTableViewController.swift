@@ -101,7 +101,8 @@ class MoviesTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         if !isSearching() {
             let lastSectionIndex = tableView.numberOfSections - 1
             let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
@@ -118,8 +119,7 @@ class MoviesTableViewController: UITableViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailSegue" {
-            if segue.destination.isKind(of: MovieDetailsViewController.self) {
-                let detailsVC = segue.destination as! MovieDetailsViewController
+            if let detailsVC = segue.destination as? MovieDetailsViewController {
                 if isSearching() {
                     detailsVC.movieViewModel = filteredMovieViewModels[selectedIndexPath!.row]
                 } else {
