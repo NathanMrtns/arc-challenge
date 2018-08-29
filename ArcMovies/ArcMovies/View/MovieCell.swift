@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieCell: UITableViewCell {
 
@@ -18,27 +19,22 @@ class MovieCell: UITableViewCell {
     var movieViewModel: MovieViewModel! {
         didSet {
             movieName.text = movieViewModel.title
-            releaseDate.text = "Release date: \(movieViewModel.release_date)"
+            releaseDate.attributedText = movieViewModel.attributedReleaseDate
             setGenre()
             setPosterImage()
         }
     }
     
     func setPosterImage() {
-        let url = URL(string: (movieViewModel?.posterFullPath)!)
         DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            if data != nil {
-                DispatchQueue.main.async {
-                    self.poster.image = UIImage(data: data!)
-                }
-            }
+            self.poster.sd_setImage(with: URL(string: self.movieViewModel!.posterFullPath))
         }
     }
     
+    //TODO: Refactor
     func setGenre() {
         Service.shared.fetchGenres { (genres, error) in
-            var genresString = "Genres: "
+            var genresString = ""
             for i in 0..<self.movieViewModel.genre_ids.count {
                 if i == self.movieViewModel.genre_ids.count-1 {
                     genresString.append("\(genres![self.movieViewModel.genre_ids[i]]!)")
@@ -46,7 +42,13 @@ class MovieCell: UITableViewCell {
                     genresString.append("\(genres![self.movieViewModel.genre_ids[i]]!), ")
                 }
             }
-            self.genre.text = genresString
+            let attributedString = NSMutableAttributedString(string: "")
+            let genresAttString = NSMutableAttributedString(string: genresString)
+            let attrs = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17)]
+            let boldString = NSMutableAttributedString(string: "Genre: ", attributes:attrs)
+            attributedString.append(boldString)
+            attributedString.append(genresAttString)
+            self.genre.attributedText = attributedString
         }
     }
 
@@ -60,6 +62,11 @@ class MovieCell: UITableViewCell {
         self.movieName.text = ""
         self.poster.image = nil
         self.releaseDate.text = ""
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        contentView.backgroundColor = isHighlighted ? UIColor.darkGray : UIColor.init(named: "Grey")
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -1,0 +1,6 @@
+framework module Pods_ArcMoviesTests {
+  umbrella header "Pods-ArcMoviesTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

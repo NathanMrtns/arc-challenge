@@ -30,7 +30,7 @@ class MoviesTableViewController: UITableViewController {
     
     func loadMoreMovies() {
         Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
-            var newMovieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
+            let newMovieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
             self.movieViewModels.append(contentsOf: newMovieViewModels)
             self.tableView.reloadData()
             self.spinner.stopAnimating()
@@ -61,6 +61,7 @@ class MoviesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
         performSegue(withIdentifier: "detailSegue", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -74,19 +75,6 @@ class MoviesTableViewController: UITableViewController {
             self.loadMoreMovies()
         }
     }
-    
-//    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        
-//        // UITableView only moves in one direction, y axis
-//        let currentOffset = scrollView.contentOffset.y
-//        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-//        print(maximumOffset - currentOffset)
-//        // Change 10.0 to adjust the distance from bottom
-//        if maximumOffset - currentOffset <= 30.0 {
-//            currentPage += 1
-//            self.loadMoreMovies()
-//        }
-//    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

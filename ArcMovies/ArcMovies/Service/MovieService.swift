@@ -1,5 +1,6 @@
 import Foundation
 
+//TODO: Refactor
 final class Constant {
     static let baseURL = "https://api.themoviedb.org/3/movie/upcoming?api_key=1f54bd990f1cdfb230adb312546d765d&language=en-US&page="
     static let genreURL = "https://api.themoviedb.org/3/genre/movie/list?api_key=1f54bd990f1cdfb230adb312546d765d&language=en-US"

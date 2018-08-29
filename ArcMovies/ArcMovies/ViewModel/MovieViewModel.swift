@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 struct MovieViewModel {
     let vote_count: Int
     let id: Int
@@ -42,5 +44,26 @@ struct MovieViewModel {
 
     var posterFullPath: String {
         return "https://image.tmdb.org/t/p/w500" + poster_path
+    }
+    
+    var formattedDate: String {
+        let df = DateFormatter()
+        df.dateFormat = "YYYY-MM-DD"
+        let date = df.date(from: release_date)
+        df.dateStyle = .medium
+        if date != nil {
+            return df.string(from: date!)
+        }
+        return release_date
+    }
+    
+    var attributedReleaseDate: NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString(string: "")
+        let releaseDateString = NSMutableAttributedString(string: self.formattedDate)
+        let attrs = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17)]
+        let boldString = NSMutableAttributedString(string: "Release date: ", attributes:attrs)
+        attributedString.append(boldString)
+        attributedString.append(releaseDateString)
+        return attributedString
     }
 }
