@@ -1,6 +1,11 @@
 # ArcMovies
 A simple iOS app to check upcoming movies using TMDB API.
 
+<p align="center">
+  <img src="../development/screenShots/moviesList.png" width="25%">
+  <img src="../development/screenShots/movieDetails.png" width="25%">
+</p>
+
 ### Running the app
 The app is compatible with XCode 9 and Swift 4.1
  1. Clone this repo and open XCode
