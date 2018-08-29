@@ -20,8 +20,13 @@ class Service: NSObject {
     var session = URLSession()
 
     override init() {
+        let oneMB = 1024*1024
+        let moviesCache = URLCache(memoryCapacity: oneMB, diskCapacity: oneMB, diskPath: "/movies")
+        //When the app initializes, it removes all cached responses
+        moviesCache.removeAllCachedResponses()
         let config = URLSessionConfiguration.default
         config.requestCachePolicy = .returnCacheDataElseLoad
+        config.urlCache = moviesCache
         session = URLSession.init(configuration: config)
     }
 

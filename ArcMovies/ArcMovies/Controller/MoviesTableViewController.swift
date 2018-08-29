@@ -14,13 +14,20 @@ class MoviesTableViewController: UITableViewController {
     var filteredMovieViewModels = [MovieViewModel]()
     var selectedIndexPath: IndexPath?
     var currentPage = 1
+    var totalPages = 1
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .white)
     var searchController = UISearchController(searchResultsController: nil)
-    var hasMoreMovies = true
-    var totalPages = 1
-
+    let cellId = "movieCell"
+    let detailsSegueId = "detailSegue"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchController()
+        spinner.hidesWhenStopped = true
+        fetchMovies()
+    }
+    
+    fileprivate func setupSearchController() {
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search movies"
@@ -29,8 +36,6 @@ class MoviesTableViewController: UITableViewController {
         searchController.searchBar.barTintColor = .white
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        spinner.hidesWhenStopped = true
-        fetchMovies()
     }
 
     func fetchMovies() {
@@ -65,7 +70,7 @@ class MoviesTableViewController: UITableViewController {
     }
 
     func showErrorAlert() {
-        let alert = UIAlertController(title: "Error", message: "There was an error!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Error", message: "There was an error, check your connection!", preferredStyle: .alert)
         let okBtn = UIAlertAction(title: NSLocalizedString("ok", comment: "ok"),
                                   style: UIAlertActionStyle.cancel,
                                   handler: nil)
@@ -78,20 +83,39 @@ class MoviesTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == detailsSegueId {
+            if let detailsVC = segue.destination as? MovieDetailsViewController {
+                if isSearching() {
+                    detailsVC.movieViewModel = filteredMovieViewModels[selectedIndexPath!.row]
+                } else {
+                    detailsVC.movieViewModel = movieViewModels[selectedIndexPath!.row]
+                }
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+}
+
+// MARK: - Table view data source
+extension MoviesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching() {
             return filteredMovieViewModels.count
         }
         return movieViewModels.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MovieCell
         var movieViewModel: MovieViewModel?
         if isSearching() {
             movieViewModel = filteredMovieViewModels[indexPath.row]
@@ -101,10 +125,10 @@ class MoviesTableViewController: UITableViewController {
         cell.movieViewModel = movieViewModel!
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
-        performSegue(withIdentifier: "detailSegue", sender: self)
+        performSegue(withIdentifier: detailsSegueId, sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -124,35 +148,16 @@ class MoviesTableViewController: UITableViewController {
             spinner.stopAnimating()
         }
     }
-
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "detailSegue" {
-            if let detailsVC = segue.destination as? MovieDetailsViewController {
-                if isSearching() {
-                    detailsVC.movieViewModel = filteredMovieViewModels[selectedIndexPath!.row]
-                } else {
-                    detailsVC.movieViewModel = movieViewModels[selectedIndexPath!.row]
-                }
-            }
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-    }
 }
 
+//MARK: - Search Delegates
 extension MoviesTableViewController: UISearchResultsUpdating, UISearchControllerDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         filterMovies(searchController.searchBar.text!)
     }
     
     func filterMovies(_ searchText: String) {
-        //TODO: Review
-        filteredMovieViewModels = movieViewModels.filter({( movieViewModel : MovieViewModel) -> Bool in
-            return movieViewModel.title.lowercased().contains(searchText.lowercased())
-        })
+        filteredMovieViewModels = movieViewModels.filter { $0.title.lowercased().contains(searchText.lowercased()) }
         tableView.reloadData()
     }
     

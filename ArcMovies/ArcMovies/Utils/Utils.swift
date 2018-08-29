@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Utils: NSObject {
+class Utils {
     static let shared = Utils()
 
     func getGenreAttributedString(_ genresString: String) -> NSMutableAttributedString {
