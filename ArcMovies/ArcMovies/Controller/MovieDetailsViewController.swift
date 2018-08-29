@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//(name, poster image, genre, overview and release date)
 class MovieDetailsViewController: UIViewController {
 
     var movieViewModel: MovieViewModel?
@@ -15,8 +14,8 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet var overview: UITextView!
     @IBOutlet var poster: UIImageView!
-
     @IBOutlet var movieTitle: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = movieViewModel?.title
@@ -27,6 +26,10 @@ class MovieDetailsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
 
     func setMovieDetails() {
@@ -41,27 +44,32 @@ class MovieDetailsViewController: UIViewController {
     
     func setPosterImage() {
         DispatchQueue.global().async {
-            self.poster.sd_setImage(with: URL(string: self.movieViewModel!.posterFullPath))
+            self.poster.sd_setImage(with: URL(string: self.movieViewModel!.posterFullPath),
+                                    completed: {(image, error, cached, url) in
+                if error != nil {
+                    self.poster.image = UIImage.init(named: "posterPlaceholder")
+                }
+            })
         }
     }
     
     func setGenre() {
-        Service.shared.fetchGenres { (genres, error) in
-            var genresString = ""
-            for i in 0..<self.movieViewModel!.genre_ids.count {
-                if i == self.movieViewModel!.genre_ids.count-1 {
-                    genresString.append("\(genres![self.movieViewModel!.genre_ids[i]]!)")
+        if movieViewModel != nil {
+            Service.shared.fetchGenres { (genres, error) in
+                if genres != nil && error == nil {
+                    var genresString = ""
+                    for i in 0..<self.movieViewModel!.genre_ids.count {
+                        if i == self.movieViewModel!.genre_ids.count-1 {
+                            genresString.append("\(genres![self.movieViewModel!.genre_ids[i]]!)")
+                        } else {
+                            genresString.append("\(genres![self.movieViewModel!.genre_ids[i]]!), ")
+                        }
+                    }
+                    self.genre.attributedText = Utils.shared.getGenreAttributedString(genresString)
                 } else {
-                    genresString.append("\(genres![self.movieViewModel!.genre_ids[i]]!), ")
+                    self.genre.text = "Genre: -"
                 }
             }
-            let attributedString = NSMutableAttributedString(string: "")
-            let genresAttString = NSMutableAttributedString(string: genresString)
-            let attrs = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17)]
-            let boldString = NSMutableAttributedString(string: "Genre: ", attributes:attrs)
-            attributedString.append(boldString)
-            attributedString.append(genresAttString)
-            self.genre.attributedText = attributedString
         }
     }
     

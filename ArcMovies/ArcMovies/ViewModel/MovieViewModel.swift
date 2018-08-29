@@ -43,7 +43,7 @@ struct MovieViewModel {
     }
 
     var posterFullPath: String {
-        return "https://image.tmdb.org/t/p/w500" + poster_path
+        return URLS.imageURL + poster_path
     }
     
     var formattedDate: String {

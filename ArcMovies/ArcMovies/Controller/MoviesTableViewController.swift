@@ -14,7 +14,7 @@ class MoviesTableViewController: UITableViewController {
     var filteredMovieViewModels = [MovieViewModel]()
     var selectedIndexPath: IndexPath?
     var currentPage = 1
-    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .white)
     var searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
@@ -25,7 +25,6 @@ class MoviesTableViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.tintColor = .white
         searchController.searchBar.barTintColor = .white
-        searchController.searchBar.textField?.backgroundColor = .white
         navigationItem.searchController = searchController
         definesPresentationContext = true
         spinner.hidesWhenStopped = true
@@ -34,18 +33,37 @@ class MoviesTableViewController: UITableViewController {
 
     func fetchMovies() {
         Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
-            self.movieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
-            self.tableView.reloadData()
+            if movies != nil && error == nil {
+                self.movieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
+                self.tableView.reloadData()
+            } else {
+                self.showErrorAlert()
+            }
         })
     }
-    
+
     func loadMoreMovies() {
         Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
-            let newMovieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
-            self.movieViewModels.append(contentsOf: newMovieViewModels)
-            self.tableView.reloadData()
-            self.spinner.stopAnimating()
+            if movies != nil && error == nil {
+                let newMovieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
+                self.movieViewModels.append(contentsOf: newMovieViewModels)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.spinner.stopAnimating()
+                }
+            } else {
+                self.showErrorAlert()
+            }
         })
+    }
+
+    func showErrorAlert() {
+        let alert = UIAlertController(title: "Error", message: "There was an error!", preferredStyle: .alert)
+        let okBtn = UIAlertAction(title: NSLocalizedString("ok", comment: "ok"),
+                                  style: UIAlertActionStyle.cancel,
+                                  handler: nil)
+        alert.addAction(okBtn)
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -131,20 +149,5 @@ extension MoviesTableViewController: UISearchResultsUpdating, UISearchController
     
     func isSearching() -> Bool {
         return searchController.isActive && searchController.searchBar.text != ""
-    }
-    
-    func willPresentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.textField?.textColor = .white
-    }
-}
-
-extension UISearchBar {
-    var textField: UITextField? {
-        for subview in subviews.first?.subviews ?? [] {
-            if let textField = subview as? UITextField {
-                return textField
-            }
-        }
-        return nil
     }
 }

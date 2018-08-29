@@ -15,7 +15,7 @@ class MovieCell: UITableViewCell {
     @IBOutlet var genre: UILabel!
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet weak var poster: UIImageView!
-    
+
     var movieViewModel: MovieViewModel! {
         didSet {
             movieName.text = movieViewModel.title
@@ -24,31 +24,34 @@ class MovieCell: UITableViewCell {
             setPosterImage()
         }
     }
-    
+
+    //Using SDWebImage to easy cache images
     func setPosterImage() {
         DispatchQueue.global().async {
-            self.poster.sd_setImage(with: URL(string: self.movieViewModel!.posterFullPath))
+            self.poster.sd_setImage(with: URL(string: self.movieViewModel!.posterFullPath),
+                                    completed: {(image, error, cached, url) in
+                if error != nil {
+                    self.poster.image = UIImage.init(named: "posterPlaceholder")
+                }
+            })
         }
     }
-    
-    //TODO: Refactor
+
     func setGenre() {
         Service.shared.fetchGenres { (genres, error) in
-            var genresString = ""
-            for i in 0..<self.movieViewModel.genre_ids.count {
-                if i == self.movieViewModel.genre_ids.count-1 {
-                    genresString.append("\(genres![self.movieViewModel.genre_ids[i]]!)")
-                } else {
-                    genresString.append("\(genres![self.movieViewModel.genre_ids[i]]!), ")
+            if genres != nil && error == nil {
+                var genresString = ""
+                for i in 0..<self.movieViewModel.genre_ids.count {
+                    if i == self.movieViewModel.genre_ids.count-1 {
+                        genresString.append("\(genres![self.movieViewModel.genre_ids[i]]!)")
+                    } else {
+                        genresString.append("\(genres![self.movieViewModel.genre_ids[i]]!), ")
+                    }
                 }
+                self.genre.attributedText = Utils.shared.getGenreAttributedString(genresString)
+            } else {
+                self.genre.text = "Genre: -"
             }
-            let attributedString = NSMutableAttributedString(string: "")
-            let genresAttString = NSMutableAttributedString(string: genresString)
-            let attrs = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17)]
-            let boldString = NSMutableAttributedString(string: "Genre: ", attributes:attrs)
-            attributedString.append(boldString)
-            attributedString.append(genresAttString)
-            self.genre.attributedText = attributedString
         }
     }
 

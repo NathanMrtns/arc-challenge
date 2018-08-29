@@ -23,6 +23,7 @@
 		D87A76EB2135DEB600E8D128 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76EA2135DEB600E8D128 /* MovieViewModel.swift */; };
 		D87A76ED2135E34000E8D128 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76EC2135E34000E8D128 /* MovieDetailsViewController.swift */; };
 		D87A76F02135E80800E8D128 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76EE2135E7A100E8D128 /* Movie.swift */; };
+		D87A76F32136FEBA00E8D128 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A76F22136FEBA00E8D128 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		D87A76EA2135DEB600E8D128 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		D87A76EC2135E34000E8D128 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		D87A76EE2135E7A100E8D128 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		D87A76F22136FEBA00E8D128 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D9C2BDFA46D9EF631B4BFA9D /* Pods_ArcMoviesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcMoviesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -149,6 +151,7 @@
 		D866FE1021358F9E00A0A378 /* ArcMovies */ = {
 			isa = PBXGroup;
 			children = (
+				D87A76F12136FE6D00E8D128 /* Utils */,
 				D87A76E62135D28C00E8D128 /* ViewModel */,
 				D87A76E52135D28500E8D128 /* View */,
 				D87A76E22135D27C00E8D128 /* Service */,
@@ -221,6 +224,14 @@
 				D87A76EA2135DEB600E8D128 /* MovieViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D87A76F12136FE6D00E8D128 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D87A76F22136FEBA00E8D128 /* Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,6 +446,7 @@
 			files = (
 				D87A76F02135E80800E8D128 /* Movie.swift in Sources */,
 				D87A76DE2135D26300E8D128 /* MoviesTableViewController.swift in Sources */,
+				D87A76F32136FEBA00E8D128 /* Utils.swift in Sources */,
 				D866FE1221358F9E00A0A378 /* AppDelegate.swift in Sources */,
 				D87A76ED2135E34000E8D128 /* MovieDetailsViewController.swift in Sources */,
 				D87A76E92135DAD200E8D128 /* MovieCell.swift in Sources */,
@@ -617,6 +629,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W4MJ7MRKT5;
 				INFOPLIST_FILE = ArcMovies/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -636,6 +649,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W4MJ7MRKT5;
 				INFOPLIST_FILE = ArcMovies/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

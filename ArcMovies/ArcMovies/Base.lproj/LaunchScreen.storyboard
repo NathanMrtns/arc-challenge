@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -23,7 +22,7 @@
                                 <rect key="frame" x="10" y="20" width="355" height="647"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" name="Orange"/>
+                        <color key="backgroundColor" name="AppAccentColor"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k9v-qr-Txa" secondAttribute="bottom" id="2kU-XI-y1T"/>
@@ -41,8 +40,8 @@
     </scenes>
     <resources>
         <image name="AppLogo" width="1709" height="225"/>
-        <namedColor name="Orange">
-            <color red="1" green="0.57400000095367432" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="AppAccentColor">
+            <color red="0.063000001013278961" green="0.52499997615814209" blue="0.87800002098083496" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
