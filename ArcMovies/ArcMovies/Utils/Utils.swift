@@ -24,19 +24,20 @@ class Utils: NSObject {
 
     func setGenre(label: UILabel, movieVM: MovieViewModel) {
         Service.shared.fetchGenres { (genres, error) in
-            if genres != nil && error == nil {
-                var genresString = ""
-                for i in 0..<movieVM.genreIds.count {
-                    if i == movieVM.genreIds.count-1 {
-                        genresString.append("\(genres![movieVM.genreIds[i]]!)")
-                    } else {
-                        genresString.append("\(genres![movieVM.genreIds[i]]!), ")
-                    }
-                }
-                label.attributedText = Utils.shared.getGenreAttributedString(genresString)
-            } else {
+            guard let genres = genres else {
                 label.text = "Genre: -"
+                return
             }
+            var genresString = ""
+            var movieGenres = genres.filter { movieVM.genre_ids.contains($0.id!) }
+            for i in 0..<movieGenres.count {
+                if i < movieGenres.count - 1 {
+                    genresString.append("\(movieGenres[i].name!), ")
+                } else {
+                    genresString.append("\(movieGenres[i].name!)")
+                }
+            }
+            label.attributedText = Utils.shared.getGenreAttributedString(genresString)
         }
     }
 

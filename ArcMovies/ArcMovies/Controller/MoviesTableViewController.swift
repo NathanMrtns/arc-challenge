@@ -16,6 +16,8 @@ class MoviesTableViewController: UITableViewController {
     var currentPage = 1
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .white)
     var searchController = UISearchController(searchResultsController: nil)
+    var hasMoreMovies = true
+    var totalPages = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +34,11 @@ class MoviesTableViewController: UITableViewController {
     }
 
     func fetchMovies() {
-        Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
-            if movies != nil && error == nil {
-                self.movieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
+        Service.shared.fetchMovies( page: currentPage, completion: {  (upcomingMoviesResponse, error) in
+            if upcomingMoviesResponse != nil && error == nil {
+                let movies: [Movie] = upcomingMoviesResponse!.results!
+                self.movieViewModels = movies.map({return MovieViewModel(movie: $0)})
+                self.totalPages = upcomingMoviesResponse!.total_pages ?? 1
                 self.tableView.reloadData()
             } else {
                 self.showErrorAlert()
@@ -43,16 +47,19 @@ class MoviesTableViewController: UITableViewController {
     }
 
     func loadMoreMovies() {
-        Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
-            if movies != nil && error == nil {
-                let newMovieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
-                self.movieViewModels.append(contentsOf: newMovieViewModels)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.spinner.stopAnimating()
+        Service.shared.fetchMovies( page: currentPage, completion: {  (upcomingMoviesResponse, error) in
+            if upcomingMoviesResponse != nil {
+                guard let newMovies = upcomingMoviesResponse!.results else { return }
+                if newMovies.count > 0 {
+                    let newMovieViewModels = newMovies.map({return MovieViewModel(movie: $0)})
+                    self.movieViewModels.append(contentsOf: newMovieViewModels)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        self.spinner.stopAnimating()
+                    }
+                } else {
+                    self.showErrorAlert()
                 }
-            } else {
-                self.showErrorAlert()
             }
         })
     }
@@ -103,7 +110,7 @@ class MoviesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
                             forRowAt indexPath: IndexPath) {
-        if !isSearching() {
+        if !isSearching() && (currentPage+1 <= totalPages) {
             let lastSectionIndex = tableView.numberOfSections - 1
             let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
             if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
@@ -113,6 +120,8 @@ class MoviesTableViewController: UITableViewController {
                 currentPage += 1
                 self.loadMoreMovies()
             }
+        } else {
+            spinner.stopAnimating()
         }
     }
 

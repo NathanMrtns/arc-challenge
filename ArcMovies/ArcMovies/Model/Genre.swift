@@ -7,12 +7,12 @@
 //
 
 import Foundation
-struct Genre {
-    let id: Int
-    let name: String
-    
-    init(data: [String: Any]) {
-        self.id = data["id"] as! Int
-        self.name = data["name"] as! String
-    }
+
+struct ListOfGenre: Decodable {
+    let genres : [Genre]?
+}
+
+struct Genre: Decodable {
+    let id: Int?
+    let name: String?
 }

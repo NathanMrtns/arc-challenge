@@ -7,36 +7,19 @@
 //
 
 import Foundation
-struct Movie {
-    let voteCount: Int
-    let id: Int
-    let video: Bool
-    let voteAverage: NSNumber
-    let title: String
-    let popularity: NSNumber
-    let posterPath: String
-    let originalLanguage: String
-    let originalTitle: String
-    let genreIds: [Int]
-    let backdropPath: String
-    let adult: Bool
-    let overview: String
-    let releaseDate: String
-
-    init(data: [String: Any]) {
-        self.voteCount = data["vote_count"] as! Int
-        self.id = data["id"] as! Int
-        self.video = data["video"] as! Bool
-        self.voteAverage = data["vote_average"] as! NSNumber
-        self.title = data["title"] as! String
-        self.popularity = data["popularity"] as! NSNumber
-        self.posterPath = data["poster_path"] as? String ?? ""
-        self.originalLanguage = data["original_language"] as! String
-        self.originalTitle = data["original_title"] as! String
-        self.genreIds = data["genre_ids"] as! [Int]
-        self.backdropPath = data["backdrop_path"] as? String ?? ""
-        self.adult = data["adult"] as! Bool
-        self.overview = data["overview"] as! String
-        self.releaseDate = data["release_date"] as! String
-    }
+struct Movie: Decodable {
+    let vote_count: Int?
+    let id: Int?
+    let video: Bool?
+    let vote_average: Float?
+    let title: String?
+    let popularity: Float?
+    let poster_path: String?
+    let original_language: String?
+    let original_title: String?
+    let genre_ids: [Int]?
+    let backdrop_path: String?
+    let adult: Bool?
+    let overview: String?
+    let release_date: String?
 }

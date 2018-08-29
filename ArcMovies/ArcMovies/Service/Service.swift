@@ -1,6 +1,13 @@
+//
+//  Service.swift
+//  ArcMovies
+//
+//  Created by Nathan on 28/08/18.
+//  Copyright © 2018 Nathan. All rights reserved.
+//
+
 import Foundation
 
-//TODO: Refactor
 final class URLS {
     static let baseURL = "https://api.themoviedb.org/3/"
     static let imageURL = "https://image.tmdb.org/t/p/w500"
@@ -18,7 +25,7 @@ class Service: NSObject {
         session = URLSession.init(configuration: config)
     }
 
-    func fetchMovies(page: Int, completion: @escaping ([Movie]?, Error?) -> ()) {
+    func fetchMovies(page: Int, completion: @escaping (UpcomingMovieResponse?, Error?) -> ()) {
         let url = URL(string: "\(URLS.baseURL)\(URLS.upcomingMovies)\(page)")
         let task = session.dataTask(with: url!) {(data, response, error) in
             if let err = error {
@@ -26,16 +33,11 @@ class Service: NSObject {
                 print("Failed to fetch movies:", err)
                 return
             }
+            guard let data = data else { return }
             do {
-                let jsonResult: NSDictionary =
-                    try JSONSerialization.jsonObject(with: data!,
-                                                     options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                var upcomingMovies = [Movie]()
-                if let movies = jsonResult["results"] as? [[String: Any]] {
-                    movies.forEach { upcomingMovies.append(Movie(data:$0)) }
-                }
+                let upcomingMoviesResponse = try JSONDecoder().decode(UpcomingMovieResponse.self, from: data)
                 DispatchQueue.main.async {
-                    completion(upcomingMovies, nil)
+                    completion(upcomingMoviesResponse, nil)
                 }
             } catch let error as NSError {
                 NSLog("Failed to parse movies")
@@ -45,7 +47,7 @@ class Service: NSObject {
         task.resume()
     }
     
-    func fetchGenres(completion: @escaping ([Int: String]?, Error?) -> ()) {
+    func fetchGenres(completion: @escaping ([Genre]?, Error?) -> ()) {
         let url = URL(string: "\(URLS.baseURL)\(URLS.genreURL)")
         let task = session.dataTask(with: url!) {(data, response, error) in
             if let err = error {
@@ -53,19 +55,11 @@ class Service: NSObject {
                 print("Failed to fetch genres:", err)
                 return
             }
+            guard let data = data else { return }
             do {
-                let jsonResult: NSDictionary =
-                    try JSONSerialization.jsonObject(with: data!,
-                                                     options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                var genres: [Int: String] = [:]
-                if let jsonGenres = jsonResult["genres"] as? [[String: Any]] {
-                    for genre in jsonGenres {
-                        let genre = Genre(data: genre)
-                        genres[genre.id] = genre.name
-                    }
-                }
+                let listGenres = try JSONDecoder().decode(ListOfGenre.self, from: data)
                 DispatchQueue.main.async {
-                    completion(genres, nil)
+                    completion(listGenres.genres, nil)
                 }
             } catch let error as NSError {
                 NSLog("Failed to parse genres")
