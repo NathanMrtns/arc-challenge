@@ -48,7 +48,7 @@ struct MovieViewModel {
     
     var formattedDate: String {
         let df = DateFormatter()
-        df.dateFormat = "YYYY-MM-DD"
+        df.dateFormat = "yyyy-MM-dd"
         let date = df.date(from: releaseDate)
         df.dateStyle = .medium
         if date != nil {
