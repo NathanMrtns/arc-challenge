@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D84BFD6B21362E0000F9BA32 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84BFD6A21362E0000F9BA32 /* Genre.swift */; };
 		D866FE1221358F9E00A0A378 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D866FE1121358F9E00A0A378 /* AppDelegate.swift */; };
 		D866FE1721358F9E00A0A378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D866FE1521358F9E00A0A378 /* Main.storyboard */; };
 		D866FE1921358FA000A0A378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D866FE1821358FA000A0A378 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D84BFD6A21362E0000F9BA32 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		D866FE0E21358F9E00A0A378 /* ArcMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArcMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D866FE1121358F9E00A0A378 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D866FE1621358F9E00A0A378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				D87A76EE2135E7A100E8D128 /* Movie.swift */,
+				D84BFD6A21362E0000F9BA32 /* Genre.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				D87A76E92135DAD200E8D128 /* MovieCell.swift in Sources */,
 				D87A76E42135D27C00E8D128 /* MovieService.swift in Sources */,
 				D87A76EB2135DEB600E8D128 /* MovieViewModel.swift in Sources */,
+				D84BFD6B21362E0000F9BA32 /* Genre.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

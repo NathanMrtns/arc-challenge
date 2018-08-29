@@ -30,11 +30,11 @@ struct Movie {
         self.vote_average = data["vote_average"] as! NSNumber
         self.title = data["title"] as! String
         self.popularity = data["popularity"] as! NSNumber
-        self.poster_path = data["poster_path"] as! String
+        self.poster_path = data["poster_path"] as? String ?? ""
         self.original_language = data["original_language"] as! String
         self.original_title = data["original_title"] as! String
         self.genre_ids = data["genre_ids"] as! [Int]
-        self.backdrop_path = data["backdrop_path"] as! String
+        self.backdrop_path = data["backdrop_path"] as? String ?? ""
         self.adult = data["adult"] as! Bool
         self.overview = data["overview"] as! String
         self.release_date = data["release_date"] as! String

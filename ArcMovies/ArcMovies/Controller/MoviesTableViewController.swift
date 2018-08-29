@@ -12,17 +12,29 @@ class MoviesTableViewController: UITableViewController {
 
     var movieViewModels = [MovieViewModel]()
     var selectedIndexPath: IndexPath?
+    var currentPage = 1
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        spinner.hidesWhenStopped = true
         fetchMovies()
     }
 
-    fileprivate func fetchMovies() {
-        Service.shared.fetchMovies { (movies, error) in
+    func fetchMovies() {
+        Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
             self.movieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
             self.tableView.reloadData()
-        }
+        })
+    }
+    
+    func loadMoreMovies() {
+        Service.shared.fetchMovies( page: currentPage, completion: {  (movies, error) in
+            var newMovieViewModels = movies?.map({return MovieViewModel(movie: $0)}) ?? []
+            self.movieViewModels.append(contentsOf: newMovieViewModels)
+            self.tableView.reloadData()
+            self.spinner.stopAnimating()
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,6 +62,31 @@ class MoviesTableViewController: UITableViewController {
         selectedIndexPath = indexPath
         performSegue(withIdentifier: "detailSegue", sender: self)
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastSectionIndex = tableView.numberOfSections - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+        if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+            tableView.tableFooterView = spinner
+            currentPage += 1
+            self.loadMoreMovies()
+        }
+    }
+    
+//    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        
+//        // UITableView only moves in one direction, y axis
+//        let currentOffset = scrollView.contentOffset.y
+//        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+//        print(maximumOffset - currentOffset)
+//        // Change 10.0 to adjust the distance from bottom
+//        if maximumOffset - currentOffset <= 30.0 {
+//            currentPage += 1
+//            self.loadMoreMovies()
+//        }
+//    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

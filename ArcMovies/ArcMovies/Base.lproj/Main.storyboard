@@ -70,6 +70,7 @@
                                 <connections>
                                     <outlet property="genre" destination="ldk-YY-rnf" id="IgF-b2-icb"/>
                                     <outlet property="movieName" destination="XHV-5E-4s4" id="31k-EJ-qam"/>
+                                    <outlet property="poster" destination="Bqg-fI-NRG" id="RS5-ap-k4Z"/>
                                     <outlet property="releaseDate" destination="Jgh-dX-ESj" id="5UV-YJ-yP7"/>
                                 </connections>
                             </tableViewCell>

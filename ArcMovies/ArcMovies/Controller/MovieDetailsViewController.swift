@@ -31,17 +31,36 @@ class MovieDetailsViewController: UIViewController {
 
     func setMovieDetails() {
         movieTitle.text = movieViewModel?.title
-        genre.text = "\(movieViewModel?.genre_ids.first)"
         releaseDate.text = movieViewModel?.release_date
         overview.text = movieViewModel?.overview
-        
+        setPosterImage()
+        setGenre()
+    }
+    
+    func setPosterImage() {
         let url = URL(string: (movieViewModel?.posterFullPath)!)
-
+        
         DispatchQueue.global().async {
             let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            DispatchQueue.main.async {
-                self.poster.image = UIImage(data: data!)
+            if data != nil {
+                DispatchQueue.main.async {
+                    self.poster.image = UIImage(data: data!)
+                }
             }
+        }
+    }
+    
+    func setGenre() {
+        Service.shared.fetchGenres { (genres, error) in
+            var genresString = "Genres: "
+            for i in 0..<self.movieViewModel!.genre_ids.count {
+                if i == self.movieViewModel!.genre_ids.count-1 {
+                    genresString.append("\(genres![self.movieViewModel!.genre_ids[i]]!)")
+                } else {
+                    genresString.append("\(genres![self.movieViewModel!.genre_ids[i]]!), ")
+                }
+            }
+            self.genre.text = genresString
         }
     }
     
